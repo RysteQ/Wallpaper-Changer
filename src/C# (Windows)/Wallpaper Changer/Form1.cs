@@ -9,7 +9,6 @@ namespace Wallpaper_Changer
         private bool onlineOrOffline = false;
 
         OfflineMode offlineMode = new OfflineMode();
-        OnlineMode onlineMode = new OnlineMode();
 
         public MainForm()
         {
@@ -18,34 +17,23 @@ namespace Wallpaper_Changer
 
         private void startButton_Click(object sender, EventArgs e)
         {
-            if (modeSelectionListbox.SelectedIndex == -1)
+            if (running)
             {
-                MessageBox.Show("Please select a mode from the panel to the right", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                StopWallpaperChanger(offlineMode);
                 return;
             }
 
-            if (running)
-                StopWallpaperChanger(onlineMode, offlineMode);
-            
-            running = true;
-
-            if (modeSelectionListbox.SelectedIndex == 0)
-            {
-                offlineMode.SetInterval(wallpaperChangeIntervalMinutes);
-                offlineMode.SetDirectory(wallpaperDirectory);
-                offlineMode.start();
-            } else
-            {
-                // TODO
-            }
+            offlineMode.SetInterval(wallpaperChangeIntervalMinutes);
+            offlineMode.SetDirectory(wallpaperDirectory);
+            offlineMode.start();
 
             startButton.Text = "Stop";
+            running = true;
         }
 
-        private void StopWallpaperChanger(OnlineMode onlineModeObject, OfflineMode offlineModeObject)
+        private void StopWallpaperChanger(OfflineMode offlineModeObject)
         {
-            if (onlineOrOffline)
-                offlineModeObject.stop();
+            offlineModeObject.stop();
 
             startButton.Text = "Start";
             running = false;
@@ -79,11 +67,6 @@ namespace Wallpaper_Changer
         private void setOfflineModeButton_Click(object sender, EventArgs e)
         {
             wallpaperDirectory = offlineModeDirectoryTextbox.Text;
-        }
-
-        private void setOnlineModeButton_Click(object sender, EventArgs e)
-        {
-            deviantartProfileUrl = onlineModeDirectoryLabel.Text;
         }
 
         private void folderBrowserButton_Click(object sender, EventArgs e)

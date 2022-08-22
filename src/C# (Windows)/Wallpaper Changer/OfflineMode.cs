@@ -26,11 +26,11 @@ public sealed class OfflineMode
         if (allowedToStart == false)
             return;
 
-        looping = true;
+        executing = true;
 
-        new Thread(() =>
+        wallpaperChangingThread = new Thread(() =>
         {
-            while (looping)
+            while (executing)
             {
                 for (int i = 0; i < wallpapersPath.Length; i++)
                 {
@@ -38,12 +38,14 @@ public sealed class OfflineMode
                     Thread.Sleep(wallpaperChangeInterval * 1000 * 60);
                 }
             }
-        }).Start();
+        });
+
+        wallpaperChangingThread.Start();
     }
 
     public void stop()
     {
-        looping = false;
+        executing = false;
     }
 
     private void init()
@@ -59,6 +61,8 @@ public sealed class OfflineMode
     private string wallpaperDirectory;
     private string[] wallpapersPath;
     private int wallpaperChangeInterval;
-    private bool looping = false;
     private bool allowedToStart = false;
+    private bool executing = false;
+
+    Thread wallpaperChangingThread;
 }
