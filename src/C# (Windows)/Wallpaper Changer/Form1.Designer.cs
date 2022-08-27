@@ -28,16 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.offlineModeDirectoryLabel = new System.Windows.Forms.Label();
             this.offlineModeDirectoryTextbox = new System.Windows.Forms.TextBox();
             this.setOfflineModeButton = new System.Windows.Forms.Button();
             this.decreaseWallpaperIntervalButton = new System.Windows.Forms.Button();
             this.increaseWallpaperIntervalButton = new System.Windows.Forms.Button();
             this.wallpaperIntervalLabel = new System.Windows.Forms.Label();
-            this.autoStartupOnBootRadiobox = new System.Windows.Forms.RadioButton();
             this.startButton = new System.Windows.Forms.Button();
             this.folderBrowserButton = new System.Windows.Forms.Button();
             this.FD = new System.Windows.Forms.FolderBrowserDialog();
+            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.SuspendLayout();
             // 
             // offlineModeDirectoryLabel
@@ -95,20 +97,9 @@
             this.wallpaperIntervalLabel.TabIndex = 8;
             this.wallpaperIntervalLabel.Text = "1";
             // 
-            // autoStartupOnBootRadiobox
-            // 
-            this.autoStartupOnBootRadiobox.AutoSize = true;
-            this.autoStartupOnBootRadiobox.Location = new System.Drawing.Point(635, 14);
-            this.autoStartupOnBootRadiobox.Name = "autoStartupOnBootRadiobox";
-            this.autoStartupOnBootRadiobox.Size = new System.Drawing.Size(108, 19);
-            this.autoStartupOnBootRadiobox.TabIndex = 9;
-            this.autoStartupOnBootRadiobox.TabStop = true;
-            this.autoStartupOnBootRadiobox.Text = "Startup on boot";
-            this.autoStartupOnBootRadiobox.UseVisualStyleBackColor = true;
-            // 
             // startButton
             // 
-            this.startButton.Location = new System.Drawing.Point(749, 10);
+            this.startButton.Location = new System.Drawing.Point(635, 11);
             this.startButton.Name = "startButton";
             this.startButton.Size = new System.Drawing.Size(75, 23);
             this.startButton.TabIndex = 10;
@@ -126,14 +117,21 @@
             this.folderBrowserButton.UseVisualStyleBackColor = true;
             this.folderBrowserButton.Click += new System.EventHandler(this.folderBrowserButton_Click);
             // 
+            // notifyIcon
+            // 
+            this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
+            this.notifyIcon.Text = "notifyIcon1";
+            this.notifyIcon.Visible = true;
+            this.notifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseClick);
+            this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseDoubleClick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(839, 44);
+            this.ClientSize = new System.Drawing.Size(718, 44);
             this.Controls.Add(this.folderBrowserButton);
             this.Controls.Add(this.startButton);
-            this.Controls.Add(this.autoStartupOnBootRadiobox);
             this.Controls.Add(this.wallpaperIntervalLabel);
             this.Controls.Add(this.increaseWallpaperIntervalButton);
             this.Controls.Add(this.decreaseWallpaperIntervalButton);
@@ -144,6 +142,7 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Wallpaper Changer";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -157,9 +156,9 @@
         private Button decreaseWallpaperIntervalButton;
         private Button increaseWallpaperIntervalButton;
         private Label wallpaperIntervalLabel;
-        private RadioButton autoStartupOnBootRadiobox;
         private Button startButton;
         private Button folderBrowserButton;
         private FolderBrowserDialog FD;
+        private NotifyIcon notifyIcon;
     }
 }

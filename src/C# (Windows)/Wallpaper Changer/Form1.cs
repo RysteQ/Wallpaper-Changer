@@ -1,3 +1,5 @@
+using System.Reflection;
+
 namespace Wallpaper_Changer
 {
     public partial class MainForm : Form
@@ -13,6 +15,16 @@ namespace Wallpaper_Changer
         public MainForm()
         {
             InitializeComponent();
+            CheckDefaultFolder();
+        }
+
+        private void CheckDefaultFolder()
+        {
+            if (Properties.Settings.Default.DefaultFolder != "{EMPTY}")
+            {
+                offlineModeDirectoryTextbox.Text = Properties.Settings.Default.DefaultFolder;
+                setOfflineModeButton_Click(null, null);
+            }
         }
 
         private void startButton_Click(object sender, EventArgs e)
@@ -67,6 +79,8 @@ namespace Wallpaper_Changer
         private void setOfflineModeButton_Click(object sender, EventArgs e)
         {
             wallpaperDirectory = offlineModeDirectoryTextbox.Text;
+            Properties.Settings.Default.DefaultFolder = wallpaperDirectory;
+            Properties.Settings.Default.Save();
         }
 
         private void folderBrowserButton_Click(object sender, EventArgs e)
@@ -75,6 +89,24 @@ namespace Wallpaper_Changer
 
             if (FD.ShowDialog() == DialogResult.OK)
                 offlineModeDirectoryTextbox.Text = FD.SelectedPath;
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            notifyIcon.Visible = true;
+            Hide();
+        }
+
+        private void notifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            Show();
+        }
+
+        private void notifyIcon_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+                Environment.Exit(0);
         }
     }
 }
