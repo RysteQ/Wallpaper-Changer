@@ -85,7 +85,7 @@ namespace Wallpaper_Changer
 
         private void folderBrowserButton_Click(object sender, EventArgs e)
         {
-            FD.SelectedPath = "Pictures";
+            FD.SelectedPath = "C:\\Users\\{USER}\\Pictures\\".Replace("{USER}", Environment.UserName);
 
             if (FD.ShowDialog() == DialogResult.OK)
                 offlineModeDirectoryTextbox.Text = FD.SelectedPath;
