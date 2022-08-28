@@ -4,11 +4,8 @@ namespace Wallpaper_Changer
 {
     public partial class MainForm : Form
     {
-        private int wallpaperChangeIntervalMinutes = 1;
         private string wallpaperDirectory = null;
-        private string deviantartProfileUrl = null;
         private bool running = false;
-        private bool onlineOrOffline = false;
 
         OfflineMode offlineMode = new OfflineMode();
 
@@ -35,9 +32,12 @@ namespace Wallpaper_Changer
                 return;
             }
 
-            offlineMode.SetInterval(wallpaperChangeIntervalMinutes);
+            offlineMode.SetInterval((int) wallpaperChangeInterval.Value);
             offlineMode.SetDirectory(wallpaperDirectory);
             offlineMode.start();
+
+            if (offlineMode.isAllowed() == false)
+                return;
 
             startButton.Text = "Stop";
             running = true;
@@ -49,31 +49,6 @@ namespace Wallpaper_Changer
 
             startButton.Text = "Start";
             running = false;
-        }
-
-        private void increaseWallpaperIntervalButton_Click(object sender, EventArgs e)
-        {
-            if (wallpaperChangeIntervalMinutes < 60)
-            {
-                wallpaperChangeIntervalMinutes++;
-                wallpaperIntervalLabel.Text = wallpaperChangeIntervalMinutes.ToString();
-            } else
-            {
-                MessageBox.Show("Cannot increase the value further", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void decreaseWallpaperIntervalButton_Click(object sender, EventArgs e)
-        {
-            if (wallpaperChangeIntervalMinutes > 1)
-            {
-                wallpaperChangeIntervalMinutes--;
-                wallpaperIntervalLabel.Text = wallpaperChangeIntervalMinutes.ToString();
-            }
-            else
-            {
-                MessageBox.Show("Cannot decrease the value further", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
         private void setOfflineModeButton_Click(object sender, EventArgs e)
@@ -107,6 +82,11 @@ namespace Wallpaper_Changer
         {
             if (e.Button == MouseButtons.Right)
                 Environment.Exit(0);
+        }
+
+        private void wallpaperChangeInterval_ValueChanged(object sender, EventArgs e)
+        {
+            offlineMode.SetInterval((int)wallpaperChangeInterval.Value);
         }
     }
 }

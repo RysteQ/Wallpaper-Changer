@@ -33,13 +33,12 @@
             this.offlineModeDirectoryLabel = new System.Windows.Forms.Label();
             this.offlineModeDirectoryTextbox = new System.Windows.Forms.TextBox();
             this.setOfflineModeButton = new System.Windows.Forms.Button();
-            this.decreaseWallpaperIntervalButton = new System.Windows.Forms.Button();
-            this.increaseWallpaperIntervalButton = new System.Windows.Forms.Button();
-            this.wallpaperIntervalLabel = new System.Windows.Forms.Label();
             this.startButton = new System.Windows.Forms.Button();
             this.folderBrowserButton = new System.Windows.Forms.Button();
             this.FD = new System.Windows.Forms.FolderBrowserDialog();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.wallpaperChangeInterval = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.wallpaperChangeInterval)).BeginInit();
             this.SuspendLayout();
             // 
             // offlineModeDirectoryLabel
@@ -60,48 +59,19 @@
             // 
             // setOfflineModeButton
             // 
-            this.setOfflineModeButton.Location = new System.Drawing.Point(351, 12);
+            this.setOfflineModeButton.Location = new System.Drawing.Point(351, 11);
             this.setOfflineModeButton.Name = "setOfflineModeButton";
-            this.setOfflineModeButton.Size = new System.Drawing.Size(89, 23);
+            this.setOfflineModeButton.Size = new System.Drawing.Size(89, 24);
             this.setOfflineModeButton.TabIndex = 3;
             this.setOfflineModeButton.Text = "Set";
             this.setOfflineModeButton.UseVisualStyleBackColor = true;
             this.setOfflineModeButton.Click += new System.EventHandler(this.setOfflineModeButton_Click);
             // 
-            // decreaseWallpaperIntervalButton
-            // 
-            this.decreaseWallpaperIntervalButton.Location = new System.Drawing.Point(446, 12);
-            this.decreaseWallpaperIntervalButton.Name = "decreaseWallpaperIntervalButton";
-            this.decreaseWallpaperIntervalButton.Size = new System.Drawing.Size(75, 22);
-            this.decreaseWallpaperIntervalButton.TabIndex = 6;
-            this.decreaseWallpaperIntervalButton.Text = "-1 minute";
-            this.decreaseWallpaperIntervalButton.UseVisualStyleBackColor = true;
-            this.decreaseWallpaperIntervalButton.Click += new System.EventHandler(this.decreaseWallpaperIntervalButton_Click);
-            // 
-            // increaseWallpaperIntervalButton
-            // 
-            this.increaseWallpaperIntervalButton.Location = new System.Drawing.Point(554, 11);
-            this.increaseWallpaperIntervalButton.Name = "increaseWallpaperIntervalButton";
-            this.increaseWallpaperIntervalButton.Size = new System.Drawing.Size(75, 23);
-            this.increaseWallpaperIntervalButton.TabIndex = 7;
-            this.increaseWallpaperIntervalButton.Text = "+1 minute";
-            this.increaseWallpaperIntervalButton.UseVisualStyleBackColor = true;
-            this.increaseWallpaperIntervalButton.Click += new System.EventHandler(this.increaseWallpaperIntervalButton_Click);
-            // 
-            // wallpaperIntervalLabel
-            // 
-            this.wallpaperIntervalLabel.AutoSize = true;
-            this.wallpaperIntervalLabel.Location = new System.Drawing.Point(531, 15);
-            this.wallpaperIntervalLabel.Name = "wallpaperIntervalLabel";
-            this.wallpaperIntervalLabel.Size = new System.Drawing.Size(13, 15);
-            this.wallpaperIntervalLabel.TabIndex = 8;
-            this.wallpaperIntervalLabel.Text = "1";
-            // 
             // startButton
             // 
-            this.startButton.Location = new System.Drawing.Point(635, 11);
+            this.startButton.Location = new System.Drawing.Point(572, 12);
             this.startButton.Name = "startButton";
-            this.startButton.Size = new System.Drawing.Size(75, 23);
+            this.startButton.Size = new System.Drawing.Size(89, 24);
             this.startButton.TabIndex = 10;
             this.startButton.Text = "Start";
             this.startButton.UseVisualStyleBackColor = true;
@@ -125,16 +95,37 @@
             this.notifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseClick);
             this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseDoubleClick);
             // 
+            // wallpaperChangeInterval
+            // 
+            this.wallpaperChangeInterval.Location = new System.Drawing.Point(446, 12);
+            this.wallpaperChangeInterval.Maximum = new decimal(new int[] {
+            600,
+            0,
+            0,
+            0});
+            this.wallpaperChangeInterval.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.wallpaperChangeInterval.Name = "wallpaperChangeInterval";
+            this.wallpaperChangeInterval.Size = new System.Drawing.Size(120, 23);
+            this.wallpaperChangeInterval.TabIndex = 13;
+            this.wallpaperChangeInterval.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.wallpaperChangeInterval.ValueChanged += new System.EventHandler(this.wallpaperChangeInterval_ValueChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(718, 44);
+            this.ClientSize = new System.Drawing.Size(667, 45);
+            this.Controls.Add(this.wallpaperChangeInterval);
             this.Controls.Add(this.folderBrowserButton);
             this.Controls.Add(this.startButton);
-            this.Controls.Add(this.wallpaperIntervalLabel);
-            this.Controls.Add(this.increaseWallpaperIntervalButton);
-            this.Controls.Add(this.decreaseWallpaperIntervalButton);
             this.Controls.Add(this.setOfflineModeButton);
             this.Controls.Add(this.offlineModeDirectoryTextbox);
             this.Controls.Add(this.offlineModeDirectoryLabel);
@@ -143,6 +134,7 @@
             this.Name = "MainForm";
             this.Text = "Wallpaper Changer";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            ((System.ComponentModel.ISupportInitialize)(this.wallpaperChangeInterval)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -153,12 +145,15 @@
         private Label offlineModeDirectoryLabel;
         private TextBox offlineModeDirectoryTextbox;
         private Button setOfflineModeButton;
-        private Button decreaseWallpaperIntervalButton;
-        private Button increaseWallpaperIntervalButton;
-        private Label wallpaperIntervalLabel;
         private Button startButton;
         private Button folderBrowserButton;
         private FolderBrowserDialog FD;
         private NotifyIcon notifyIcon;
+        private PictureBox lol;
+        private CheckBox resolutionRestrictionsCheckbox;
+        private Label heightRestrictionLabel;
+        private NumericUpDown widthRestrictionNumberic;
+        private NumericUpDown heightRestrictionNumberic;
+        private NumericUpDown wallpaperChangeInterval;
     }
 }

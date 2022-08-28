@@ -14,7 +14,8 @@ public sealed class OfflineMode
     {
         this.wallpaperDirectory = wallpaperDirectory;
     }
-    public bool IsAllowed()
+
+    public bool isAllowed()
     {
         return allowedToStart;
     }
@@ -51,10 +52,13 @@ public sealed class OfflineMode
     private void init()
     {
         allowedToStart = true;
-        
+
         if (Directory.Exists(wallpaperDirectory))
-            wallpapersPath = Directory.GetFiles(wallpaperDirectory);
+            wallpapersPath = Directory.EnumerateFiles(wallpaperDirectory, "*.png", SearchOption.TopDirectoryOnly).ToArray();
         else
+            allowedToStart = false;
+
+        if (wallpapersPath.Length == 0)
             allowedToStart = false;
     }
 
